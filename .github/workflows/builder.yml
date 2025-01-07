@@ -14,15 +14,15 @@ on:
         NAME:
               description: 'Rom Name'
               required: true
-              default: 'aosp-arm64-ab-gapps-14.0-a03.7z'
+              default: 'a03.7z'
         VERSION:
               description: 'Baseband Version'
               required: true
-              default: 'A035FXXU4CWI1'
+              default: 'A035FXXS7CXF3'
         VENDOR:
-              description: 'Enter Direct Link Of Your Version Vendor'
+              description: 'Link Of Your Version Vendor'
               required: true
-              default: 'https://sourceforge.net/projects/a03-files/files/A035FXXU4CWI1/vendor.img'
+              default: 'https://sourceforge.net/projects/a035f/files/vendor.img'
 jobs:
   Build:
     runs-on: ubuntu-latest
