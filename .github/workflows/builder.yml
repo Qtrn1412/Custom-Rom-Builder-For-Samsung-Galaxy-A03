@@ -4,7 +4,7 @@ permissions:
 on:
   push:
     branches:
-      - main  # Change this to your desired branch
+      - main
   workflow_dispatch:
     inputs:
         GSI:
@@ -44,12 +44,35 @@ jobs:
       run: |
         cd lpbinary/binary
         wget ${{ github.event.inputs.GSI }}
+        
+        GSI_FILE=$(basename "${{ github.event.inputs.GSI }}")
+        
         mkdir sys
-        mv *.xz sys
+        mv "$GSI_FILE" sys
         cd sys
-        unxz *.xz
-        mv *.img ../system.img
+        
+        if echo "$GSI_FILE" | grep -q '\.xz$'; then
+          echo "File GSI là .xz, đang giải nén..."
+          unxz *.xz
+          mv *.img ../system.img
+        elif echo "$GSI_FILE" | grep -q '\.7z$'; then
+          echo "File GSI là .7z, đang giải nén..."
+          7z e *.7z
+          if [ -f *.img ]; then
+            mv *.img ../system.img
+          elif [ -f *system.img ]; then
+            mv *system.img ../system.img
+          else
+            echo "Lỗi: Không tìm thấy file .img sau khi giải nén .7z"
+            exit 1
+          fi
+        else
+          echo "Lỗi: Định dạng GSI không được hỗ trợ (chỉ chấp nhận .xz hoặc .7z)"
+          exit 1
+        fi
+        
         cd ..
+        
     - name: Preparing Files
       run: |
         cd lpbinary/binary
