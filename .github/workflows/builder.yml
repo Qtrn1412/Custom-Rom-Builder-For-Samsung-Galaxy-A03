@@ -1,4 +1,4 @@
-name: Custom Rom Builder Samsung Galaxy A03
+name: GSI Builder (xz GSI)
 permissions:
   contents: write
 on:
