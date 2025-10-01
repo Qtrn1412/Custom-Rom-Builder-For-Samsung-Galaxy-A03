@@ -88,8 +88,8 @@ jobs:
         cd lpbinary/binary
         tar -cvf super.tar super.img
         rm -rf super.img
-        7z a ${{ github.event.inputs.NAME }} super.tar
-        rm -rf super.tar
+        xz super.tar
+        mv super.tar.xz ${{ github.event.inputs.NAME }}.xz
     - name: Upload to Release
       uses: softprops/action-gh-release@v1
       with:
